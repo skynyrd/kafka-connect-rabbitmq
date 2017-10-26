@@ -1,4 +1,4 @@
-#Caveat
+# Caveat
 
 * This fork inserts data as json to Kafka topic instead of Avro.
 * It also supports the topics with multiple partitions.
