@@ -1,0 +1,15 @@
+{
+  "connector.class": "com.github.jcustenborder.kafka.connect.rabbitmq.RabbitMQSourceConnector",
+  "tasks.max": 8,
+  "rabbitmq.password": "",
+  "rabbitmq.queue": "",
+  "rabbitmq.host": "",
+  "name": "SampleSourceConnector",
+  "kafka.topic": "target-topic",
+  "rabbitmq.username": "",
+  "exchange": "",
+  "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter.schemas.enable": false,
+  "value.converter.schemas.enable": false
+}

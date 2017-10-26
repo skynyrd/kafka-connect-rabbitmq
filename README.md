@@ -1,3 +1,12 @@
+#Caveat
+
+* This fork inserts data as json to Kafka topic instead of Avro.
+* It also supports the topics with multiple partitions.
+* Sink part is removed. It can only be used as source connector!
+* Dockerized with confluentinc/cp-kafka-connect-base
+
+---
+
 # Configuration
 
 ## RabbitMQSourceConnector

@@ -18,34 +18,24 @@ package com.github.jcustenborder.kafka.connect.rabbitmq;
 import com.google.common.collect.ImmutableMap;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Envelope;
-import org.apache.kafka.common.utils.SystemTime;
-import org.apache.kafka.common.utils.Time;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 
 class SourceRecordBuilder {
   final RabbitMQSourceConnectorConfig config;
-  Time time = new SystemTime();
-
   SourceRecordBuilder(RabbitMQSourceConnectorConfig config) {
     this.config = config;
   }
 
   SourceRecord sourceRecord(String consumerTag, Envelope envelope, AMQP.BasicProperties basicProperties, byte[] bytes) {
-    Struct key = MessageConverter.key(basicProperties);
     Struct value = MessageConverter.value(consumerTag, envelope, basicProperties, bytes);
     final String topic = this.config.kafkaTopic.execute(RabbitMQSourceConnectorConfig.KAFKA_TOPIC_TEMPLATE, value);
 
     return new SourceRecord(
-        ImmutableMap.of("routingKey", envelope.getRoutingKey()),
-        ImmutableMap.of("deliveryTag", envelope.getDeliveryTag()),
-        topic,
-        null,
-        key.schema(),
-        key,
-        value.schema(),
-        value,
-        null == basicProperties.getTimestamp() ? this.time.milliseconds() : basicProperties.getTimestamp().getTime()
-    );
+            null,
+            ImmutableMap.of("deliveryTag", envelope.getDeliveryTag()),
+            topic,
+            null,
+            new String(bytes));
   }
 }
